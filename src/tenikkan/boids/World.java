@@ -6,7 +6,8 @@ public class World
 {
     private ArrayList<Boid> boids = new ArrayList<Boid>();
     
-    public double radius = 4.0;
+    public static double radius = 2.0;
+    public static double pushRadius = 0.7;
     
     public World() 
     {

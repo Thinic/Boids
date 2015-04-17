@@ -15,6 +15,8 @@ public class Display
     
     private BufferedImage img;
     
+    private Mouse mouse;
+    
     public Display(String title, int width, int height) 
     {
         frame = new JFrame(title);
@@ -30,6 +32,9 @@ public class Display
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        
+        mouse = new Mouse();
+        canvas.addMouseListener(mouse);
     }
     
     public void render(World world) 
@@ -56,7 +61,20 @@ public class Display
                     (int)(b.position.y * scale - world.radius * scale), 
                     (int)(world.radius * scale * 2), 
                     (int)(world.radius * scale * 2));
+            g.setColor(Color.GREEN);
+            g.drawOval(
+                    (int)(b.position.x * scale - world.pushRadius * scale), 
+                    (int)(b.position.y * scale - world.pushRadius * scale), 
+                    (int)(world.pushRadius * scale * 2), 
+                    (int)(world.pushRadius * scale * 2));
         }
+        
+        g.setColor(Color.GREEN);
+        g.fillOval(
+                (int)(Mouse.x - 10), 
+                (int)(Mouse.y - 10), 
+                (int)(20), 
+                (int)(20));
         
         g.dispose();
     }

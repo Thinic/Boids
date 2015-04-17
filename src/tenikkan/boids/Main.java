@@ -6,9 +6,9 @@ public class Main
     {
         World world = new World();
         
-        Display display = new Display("Boids Demo", 640, 480);
+        Display display = new Display("Boids Demo", 1024, 768);
         
-        for(int i = 0; i < 30; i++) 
+        for(int i = 0; i < 60; i++) 
         {
             double x = Math.random() * 15;
             double y = Math.random() * 10;
@@ -16,7 +16,10 @@ public class Main
             double dy = Math.random() * 2 - 1;
             int col = (int)(Math.random() * 0x1000000);
             
-            Boid b = new Boid(new Vec2(x, y), new Vec2(dx, dy).normalized(), col);
+            Boid b = new Boid(
+                    new Vec2(x, y), 
+                    new Vec2(dx, dy), 
+                    col);
             world.addBoid(b);
         }
         

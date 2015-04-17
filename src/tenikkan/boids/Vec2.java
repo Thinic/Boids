@@ -18,6 +18,7 @@ public class Vec2
     public Vec2 normalized() 
     {
         double len = length();
+        if(len == 0) return new Vec2(0.0, 0.0);
         return new Vec2(x / len, y / len);
     }
 }
