@@ -17,6 +17,10 @@ public class Display
     
     private Mouse mouse;
     
+    public static double scale = 10.0;
+    
+    public static boolean debug = false;
+    
     public Display(String title, int width, int height) 
     {
         frame = new JFrame(title);
@@ -46,8 +50,7 @@ public class Display
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, w, h);
         
-        int rad = 10;
-        int scale = 50;
+        int rad = (int)scale / 5;
         for(Boid b : world.getBoids()) 
         {
             g.setColor(Color.WHITE);
@@ -55,21 +58,26 @@ public class Display
                     (int)(b.position.x * scale + b.direction.x * rad * 2), (int)(b.position.y * scale + b.direction.y * rad * 2));
             g.setColor(b.color);
             g.fillOval((int)(b.position.x * scale - rad), (int)(b.position.y * scale - rad), rad * 2, rad * 2);
-            g.setColor(Color.RED);
-            g.drawOval(
-                    (int)(b.position.x * scale - world.radius * scale), 
-                    (int)(b.position.y * scale - world.radius * scale), 
-                    (int)(world.radius * scale * 2), 
-                    (int)(world.radius * scale * 2));
-            g.setColor(Color.GREEN);
-            g.drawOval(
-                    (int)(b.position.x * scale - world.pushRadius * scale), 
-                    (int)(b.position.y * scale - world.pushRadius * scale), 
-                    (int)(world.pushRadius * scale * 2), 
-                    (int)(world.pushRadius * scale * 2));
+            
+            if(debug)
+            {
+                g.setColor(Color.RED);
+                g.drawOval(
+                        (int)(b.position.x * scale - world.radius * scale), 
+                        (int)(b.position.y * scale - world.radius * scale), 
+                        (int)(world.radius * scale * 2), 
+                        (int)(world.radius * scale * 2));
+                g.setColor(Color.GREEN);
+                g.drawOval(
+                        (int)(b.position.x * scale - world.pushRadius * scale), 
+                        (int)(b.position.y * scale - world.pushRadius * scale), 
+                        (int)(world.pushRadius * scale * 2), 
+                        (int)(world.pushRadius * scale * 2));
+            }
         }
         
         g.setColor(Color.GREEN);
+        if(!Boid.followMouse) g.setColor(Color.GRAY);
         g.fillOval(
                 (int)(Mouse.x - 10), 
                 (int)(Mouse.y - 10), 

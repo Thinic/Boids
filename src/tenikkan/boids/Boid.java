@@ -8,6 +8,8 @@ public class Boid
     public Vec2 direction;
     public Color color;
     
+    public static boolean followMouse = false;
+    
     public Boid(Vec2 pos, Vec2 dir, int col) 
     {
         position = pos;
@@ -31,9 +33,9 @@ public class Boid
         position.y += direction.y * delta * 3.5;
         
         if(position.x < 0) direction.x += 0.5;
-        if(position.x > 1024 / 50d) direction.x -= 0.5;
+        if(position.x > 1024 / Display.scale) direction.x -= 0.5;
         if(position.y < 0) direction.y += 0.5;
-        if(position.y > 768 / 50d) direction.y -= 0.5;
+        if(position.y > 768 / Display.scale) direction.y -= 0.5;
     }
     
     private Vec2 getNewDirection(Boid[] boids) 
@@ -44,15 +46,21 @@ public class Boid
         Vec2 v4 = getMouseMove();
         
         Vec2 res = new Vec2(0, 0);
-        res.x = (v1.x*1 + v2.x*1 + v3.x*5 + v4.x*.7);
-        res.y = (v1.y*1 + v2.y*1 + v3.y*5 + v4.y*.7);
+        res.x = (v1.x*1 + v2.x*3 + v3.x*10);
+        res.y = (v1.y*1 + v2.y*3 + v3.y*10);
+        
+        if(followMouse) 
+        {
+            res.x += v4.x * 3;
+            res.y += v4.y * 3;
+        }
         
         return res.normalized();
     }
     
     private Vec2 getMouseMove() 
     {
-        return new Vec2(Mouse.x / 50.0 - position.x, Mouse.y / 50.0 - position.y).normalized();
+        return new Vec2(Mouse.x / Display.scale - position.x, Mouse.y / Display.scale - position.y).normalized();
     }
     
     // avg dir for now

@@ -10,8 +10,16 @@ public class Mouse implements MouseListener
     
     public void mouseClicked( MouseEvent arg0 )
     {
-        x = arg0.getX();
-        y = arg0.getY();
+        if(arg0.getButton() == MouseEvent.BUTTON1)
+        {
+            x = arg0.getX();
+            y = arg0.getY();
+        } else if(arg0.getButton() == MouseEvent.BUTTON2)
+        {
+            Display.debug = !Display.debug;
+        } else {
+            Boid.followMouse = !Boid.followMouse;
+        }
     }
 
     public void mouseEntered( MouseEvent arg0 )

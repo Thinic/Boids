@@ -8,10 +8,10 @@ public class Main
         
         Display display = new Display("Boids Demo", 1024, 768);
         
-        for(int i = 0; i < 60; i++) 
+        for(int i = 0; i < 1000; i++) 
         {
-            double x = Math.random() * 15;
-            double y = Math.random() * 10;
+            double x = Math.random() * 1024 / Display.scale;
+            double y = Math.random() * 768 / Display.scale;
             double dx = Math.random() * 2 - 1;
             double dy = Math.random() * 2 - 1;
             int col = (int)(Math.random() * 0x1000000);
@@ -31,7 +31,8 @@ public class Main
         
         while(true) 
         {
-            while(tickTime < System.nanoTime()) 
+            int loops = 0;
+            while(tickTime < System.nanoTime() && loops++<10) 
             {
                 world.update();
                 display.render(world);
