@@ -8,7 +8,7 @@ public class Main
         
         Display display = new Display("Boids Demo", 1024, 768);
         
-        for(int i = 0; i < 1000; i++) 
+        for(int i = 0; i < 50; i++) 
         {
             double x = Math.random() * 1024 / Display.scale;
             double y = Math.random() * 768 / Display.scale;

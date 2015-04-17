@@ -10,6 +10,8 @@ public class Boid
     
     public static boolean followMouse = false;
     
+    public static double speed = 5.0;
+    
     public Boid(Vec2 pos, Vec2 dir, int col) 
     {
         position = pos;
@@ -29,8 +31,8 @@ public class Boid
         direction.y += acc.y * delta * 30;
         direction = direction.normalized();
         
-        position.x += direction.x * delta * 3.5;
-        position.y += direction.y * delta * 3.5;
+        position.x += direction.x * delta * speed;
+        position.y += direction.y * delta * speed;
         
         if(position.x < 0) direction.x += 0.5;
         if(position.x > 1024 / Display.scale) direction.x -= 0.5;
@@ -46,13 +48,13 @@ public class Boid
         Vec2 v4 = getMouseMove();
         
         Vec2 res = new Vec2(0, 0);
-        res.x = (v1.x*1 + v2.x*3 + v3.x*10);
-        res.y = (v1.y*1 + v2.y*3 + v3.y*10);
+        res.x = (v1.x*1 + v2.x*2 + v3.x*4);
+        res.y = (v1.y*1 + v2.y*2 + v3.y*4);
         
         if(followMouse) 
         {
-            res.x += v4.x * 3;
-            res.y += v4.y * 3;
+            res.x += v4.x * 1;
+            res.y += v4.y * 1;
         }
         
         return res.normalized();
@@ -60,10 +62,19 @@ public class Boid
     
     private Vec2 getMouseMove() 
     {
-        return new Vec2(Mouse.x / Display.scale - position.x, Mouse.y / Display.scale - position.y).normalized();
+        // go to
+//        return new Vec2(Mouse.x / Display.scale - position.x, Mouse.y / Display.scale - position.y).normalized();
+        // stay away
+        if(!collision(
+                new Vec2(Mouse.x/Display.scale, Mouse.y/Display.scale),
+                World.radius / 2,
+                position,
+                World.radius / 2
+                ))
+            return new Vec2(0, 0);
+        return new Vec2(-Mouse.x / Display.scale + position.x, -Mouse.y / Display.scale + position.y).normalized();
     }
     
-    // avg dir for now
     private Vec2 getSteerAwayDirection(Boid[] boids) 
     {
         Vec2 dir = new Vec2(0.0, 0.0);

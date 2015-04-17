@@ -17,7 +17,7 @@ public class Display
     
     private Mouse mouse;
     
-    public static double scale = 10.0;
+    public static double scale = 50.0;
     
     public static boolean debug = false;
     
